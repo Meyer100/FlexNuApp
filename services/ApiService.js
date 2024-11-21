@@ -1,4 +1,5 @@
 import ApiManager from './APIManager'
+import { getData } from './LocalStorageService';
 
 export const userLogin = async data => {
     try {
@@ -8,29 +9,66 @@ export const userLogin = async data => {
                'content-type': 'application/json'
            }
        });
-       console.log(result.data.name);
-       console.log(result.data.checkedIn);
-       console.log(result.data.flexSeconds);
+       
        return result;
     }
     catch (error) {
-       console.log(error)
+        console.log("error");
+        console.log(error);
     }
 }
 
 
-export const getUserById = async data => {
+export const CheckUserInOut = async data => {
     try {
-       const result = await ApiManager(`?id=${data}`, {
+       const result = await ApiManager(`/User/CheckInOrOut?userId=${data}`, {
            method: 'GET',
            headers: {
-               'content-type':'application/json'
-           },
-           
+               'content-type': 'application/json',
+               'Authorization': `Bearer ${await getData()}`
+           }
        });
        return result;
     }
     catch (error) {
-       console.log(error)
+        console.log("error");
+        console.log(error);
+    }
+}
+
+
+export const GetUserCurrentInfo = async data => {
+    try {
+       const result = await ApiManager(`/User/GetUserCurrentInfo?userId=${data}`, {
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': `Bearer ${await getData()}`
+           }
+       });
+
+       return result;
+    }
+    catch (error) {
+        console.log("error");
+        console.log(error);
+    }
+}
+
+export const GetMonthlyInfo = async (userId, month) => {
+    try {
+       const result = await ApiManager(`/User/GetUserMonthlyInfo?userId=${userId}&month=${month}`, {
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': `Bearer ${await getData()}`
+           }
+       });
+
+       return result;
+    }
+    catch (error) {
+        console.log("error");
+       console.log(error);
     }
 }

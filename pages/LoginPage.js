@@ -3,43 +3,39 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { useState } from "react"
 import { userLogin } from '../services/ApiService';
-
-
+import { storeData } from '../services/LocalStorageService';
 
 
 
 
 const LoginPage = ({action}) => {
   const nav = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jobl@mail.dk");
+  const [password, setPassword] = useState("12345");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [disableLogin, setDisableLogin] = useState(false);
 
   const logUserIn = async () => {
+    setDisableLogin(true);
     if (email.length > 0 && password.length > 0) {
         try {
             const result = await userLogin({ email, password });
             if (result.status === 200) {
                 action(result.data);
-                GoToHomePage();
+                await storeData(result.data.token);
+                nav.replace('Home', { });
             } else {
+              setShowErrorMessage(true);
             }
         } catch (error) {
             console.error(error);
+            setShowErrorMessage(true);
         }
     } else {
-        errorOnLogin();
+      setShowErrorMessage(true);
     }
+    setDisableLogin(false);
 }
-
-  const GoToHomePage = () => {
-
-    {/* Validate User info */}
-
-
-    nav.replace('Home', { });
-    return;
-  };
-
 
   return (
     <View style={styles.container}>
@@ -55,9 +51,11 @@ const LoginPage = ({action}) => {
           <Text>Adgangskode</Text>
           <TextInput style={styles.loginInput} secureTextEntry={true} onChangeText={(s)=>setPassword(s)} placeholder="kode123"/>
         </View>
-
+        <View style={{opacity: (showErrorMessage == true) ? 1: 0}} >
+          <Text style={{color:'red'}}>Fejl ved log ind</Text>
+        </View>
         <View style={styles.loginButtonContainer}>
-          <TouchableOpacity style={styles.loginButton} onPress={logUserIn}>
+          <TouchableOpacity style={styles.loginButton} onPress={logUserIn} disabled={disableLogin}>
             <Text style={styles.loginButtonText}>Log ind</Text>
           </TouchableOpacity>
         </View>
