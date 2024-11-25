@@ -3,11 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import { useState } from 'react';
+import LogPage from './pages/LogPage';
 
 export default function App() {
   const [user, setUser] = useState();
   const Stack = createStackNavigator();
 
+
+  
   return (
     <NavigationContainer>
     <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Login'>
@@ -16,6 +19,12 @@ export default function App() {
         </Stack.Screen>
       <Stack.Screen name="Home"> 
           {props => <HomePage user={user}/>}
+        </Stack.Screen>
+        <Stack.Screen name="Logs"> 
+          {props => <LogPage user={user}/>}
+        </Stack.Screen>
+        <Stack.Screen name="Chat"> 
+          {props => <ChatPage user={user}/>}
         </Stack.Screen>
     </Stack.Navigator>
   </NavigationContainer>

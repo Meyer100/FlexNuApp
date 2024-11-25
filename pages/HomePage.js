@@ -1,16 +1,17 @@
 import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import {CheckUserInOut, GetUserCurrentInfo, GetMonthlyInfo} from '../services/ApiService'
+import {CheckUserInOut, GetUserCurrentInfo} from '../services/ApiService'
 import { useState,useEffect } from "react"
+import { useNavigation } from '@react-navigation/native';
 
 const HomePage = ({user}) => {
 
   const [todaysUserInfo, setTodaysUserInfo] = useState("");
-  const [monthlyInfo, setMonthlyInfo] = useState();
+  const nav = useNavigation();
 
     useEffect(()=>{
       getUserCurrentInfo();
-      getMonthlyInfo();
+      
     }, []);
 
     const formatSecondsToHHMM = (seconds) => {
@@ -47,29 +48,12 @@ const HomePage = ({user}) => {
       };
     }
 
-    const getMonthlyInfo = async ()=>{
-      const result = await GetMonthlyInfo(user.id, new Date().getMonth() + 1);
-      if (result.status === 200) {
-        setMonthlyInfo(result.data);
-      };
+    const gotToChatPage =()=>{
+      nav.replace('Chat', { });
     }
 
-    const dayInfoRender =({arrive, left, breakTime, dayFlex, date})=>{
-      return(
-        <View style={styles.dayInfoContainer}>
-        <Text style={styles.dayInfoDate}>{date}</Text>
-        <View style={styles.dayInfoBackground}>
-          <View style={styles.dayInfoColumn}>
-            <Text style={styles.dayInfoText}>Mødt: {arrive}</Text>
-            <Text style={styles.dayInfoText}>Pause: {breakTime}</Text>
-          </View>
-          <View style={styles.dayInfoColumn}>
-            <Text style={styles.dayInfoText}>Gået: {left}</Text>
-            <Text style={styles.dayInfoText}>Flex {dayFlex}</Text>
-          </View>
-        </View>
-      </View>
-      );
+    const gotToLogPage =()=>{
+      nav.replace('Logs', { });
     }
 
 
@@ -83,7 +67,7 @@ const HomePage = ({user}) => {
         </View>
 
         <View style={styles.chatButtonContainer}>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={gotToChatPage}>
             <Image style={styles.chatIcon} source={require('../assets/icons/chatbubble.png')} />
           </TouchableOpacity>
         </View>
@@ -118,20 +102,11 @@ const HomePage = ({user}) => {
         </View>
       </View>
 
-      <View style={styles.flatListContainer}>
-        <FlatList
-          data={monthlyInfo}
-          renderItem={({ item }) => (
-            dayInfoRender({
-              arrive: item.arrival,
-              left: item.left,
-              breakTime: item.break,
-              dayFlex: item.flex,
-              date: item.dateName,
-            })
-          )}
-          keyExtractor={(item, index) => index.toString()} // Ensure keys are unique
-        />
+      
+      <View style={styles.goToLogsContainer}>
+          <TouchableOpacity style={styles.goToLogsButton} onPress={gotToLogPage}>
+            <Text style={styles.goToLogsButtonText}>Logs</Text>
+          </TouchableOpacity>
       </View>
       
 
@@ -228,28 +203,27 @@ const styles = StyleSheet.create({
       fontSize: 24,
       color: '#fff',
     },
-    dayInfoContainer:{
+    goToLogsContainer:{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection:'row',
+      marginTop:30,
+    },
+    goToLogsButton:{
+      height: 80,
       width: '100%',
       maxWidth:250,
-    },
-    dayInfoBackground:{
-      backgroundColor:"#5B95F8",
-      flexDirection:'row',
-      justifyContent:'space-between',
-      padding:10,
-      borderRadius:3,
-      width:'100%',
-    },
-    dayInfoColumn:{
-      gap:15,
-    },
-    dayInfoDate:{
-      opacity:0.6,
-    },
-    dayInfoText:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius:5,
       color:'white',
+      backgroundColor:'#5B95F8',
+      borderRadius:5,
     },
-    flatListContainer:{
-      flex:1,
+    goToLogsButtonText:{
+      color:'white',
+      fontSize:32,
+      fontWeight:'bold',
     },
 })
