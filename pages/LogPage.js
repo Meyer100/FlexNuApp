@@ -25,9 +25,12 @@ const LogPage = ({user}) => {
   }
 
   const getLogInfo = async ()=>{
+
+    if(year<2000){return;}
+
     setDisableUpdate(true);
 
-    const result = await GetUserLogs(user.id, month);
+    const result = await GetUserLogs(user.id, month, year);
     
     if (result.status === 200) {
         setLogInfo(result.data);

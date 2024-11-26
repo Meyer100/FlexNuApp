@@ -55,9 +55,9 @@ export const GetUserCurrentInfo = async data => {
     }
 }
 
-export const GetUserLogs = async (userId, month) => {
+export const GetUserLogs = async (userId, month, year) => {
     try {
-       const result = await ApiManager(`/User/GetUserLogs?userId=${userId}&month=${month}`, {
+       const result = await ApiManager(`/User/GetUserLogs?userId=${userId}&month=${month}&year=${year}`, {
            method: 'GET',
            headers: {
                'content-type': 'application/json',

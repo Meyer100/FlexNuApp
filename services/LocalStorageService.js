@@ -5,7 +5,6 @@ export const storeData = async (value) => {
     try {
         const jsonValue = JSON.stringify(value);
       await AsyncStorage.setItem('jwt_token', jsonValue);
-      console.log('saved!');
     } catch (e) {
       console.log(e);
     }
