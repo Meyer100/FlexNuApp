@@ -75,7 +75,7 @@ export const GetUserLogs = async (userId, month, year) => {
 
 export const GetAllUsersChat = async () => {
     try {
-       const result = await ApiManager(`/Admin/GetUsers`, {
+       const result = await ApiManager(`/User/GetUsers`, {
            method: 'GET',
            headers: {
                'content-type': 'application/json',

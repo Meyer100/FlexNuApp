@@ -26,8 +26,8 @@ const ChatPage = ({user}) => {
           // Retrieving all users and filtering them based on if they are admins or not
             const result = await GetAllUsersChat();
             if(result.status == 200) {
-              const filteredAdminUsers = result.data.filter(u => u.admin === true && u.id != user.id);
-              setChatUsers(filteredAdminUsers);
+              //const filteredAdminUsers = result.data.filter(u => u.admin === true && u.id != user.id);
+              setChatUsers(result.data);
             }
         } else {
             console.error('Failed to connect to the WebSocket hub');
