@@ -24,7 +24,7 @@ const HomePage = ({user}) => {
   
       return `${formattedHours}:${formattedMinutes}`;
   };
-
+    {/* This function capilizes the first letter in a string */}
     const capitalizeName = (string) => {
       try {
         return string.charAt(0).toUpperCase() + string.slice(1);
