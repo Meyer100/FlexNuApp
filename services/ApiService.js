@@ -74,3 +74,56 @@ export const GetUserLogs = async (userId, month, year) => {
        console.log(error);
     }
 }
+
+export const GetAllUsersChat = async () => {
+    try {
+       const result = await ApiManager(`/Admin/GetUsers`, {
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': `Bearer ${await getData()}`
+           }
+       });
+
+       return result;
+    }
+    catch (error) {
+       console.log('error: ' + error);
+    }
+}
+
+export const GetChatsBetweenUsers = async (senderId, reciverId) => {
+    try {
+       const result = await ApiManager(`/Chat/GetMessagesBetweenPeople?senderId=${senderId}&reciverId=${reciverId}`, {
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': `Bearer ${await getData()}`
+           }
+       });
+
+       return result;
+    }
+    catch (error) {
+       console.log('error: ' + error);
+    }
+}
+
+export const SendChatToUser = async (message) => {
+    try {
+        const result = await ApiManager(`/Chat/AddMessage`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${await getData()}`
+            },
+            data: message,
+        });
+        
+        return result;
+     }
+     catch (error) {
+         console.log("error");
+         console.log(error);
+     }
+}

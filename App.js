@@ -4,6 +4,8 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import { useState } from 'react';
 import LogPage from './pages/LogPage';
+import ChatPage from './pages/ChatPage';
+import ChatOneUserPage from './pages/ChatOneUserPage';
 
 export default function App() {
   const [user, setUser] = useState();
@@ -26,6 +28,11 @@ export default function App() {
         <Stack.Screen name="Chat"> 
           {props => <ChatPage user={user}/>}
         </Stack.Screen>
+        <Stack.Screen
+          name="ChatOneUser"
+          component={ChatOneUserPage}
+          initialParams={{ user: user }}
+        />
     </Stack.Navigator>
   </NavigationContainer>
   )

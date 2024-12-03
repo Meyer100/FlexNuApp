@@ -10,8 +10,8 @@ import { storeData } from '../services/LocalStorageService';
 
 const LoginPage = ({action}) => {
   const nav = useNavigation();
-  const [email, setEmail] = useState("jobl@mail.dk");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("admin@admin.com");
+  const [password, setPassword] = useState("admin123");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [disableLogin, setDisableLogin] = useState(false);
 
