@@ -23,7 +23,7 @@ export const userLogin = async data => {
 export const CheckUserInOut = async data => {
     try {
        const result = await ApiManager(`/User/CheckInOrOut?userId=${data}`, {
-           method: 'GET',
+           method: 'POST',
            headers: {
                'content-type': 'application/json',
                'Authorization': `Bearer ${await getData()}`
@@ -32,7 +32,6 @@ export const CheckUserInOut = async data => {
        return result;
     }
     catch (error) {
-        console.log("error");
         console.log(error);
     }
 }
