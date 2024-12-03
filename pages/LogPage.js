@@ -13,12 +13,12 @@ const LogPage = ({user}) => {
   const [year, setYear] = useState(new Date().getFullYear() + 1);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
 
+  {/* runs once on load */}
   useEffect(()=>{
     getLogInfo();
     
   }, []);
 
-  
 
   const gotToHomePage =()=>{
     nav.replace('Home', { });
