@@ -49,11 +49,11 @@ const HomePage = ({user}) => {
     }
 
     const gotToChatPage =()=>{
-      nav.replace('Chat', { });
+      nav.navigate('Chat', { });
     }
 
     const gotToLogPage =()=>{
-      nav.replace('Logs', { });
+      nav.navigate('Logs', { });
     }
 
 
