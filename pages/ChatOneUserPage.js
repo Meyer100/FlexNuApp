@@ -14,6 +14,11 @@ const ChatOneUserPage = ({ route }) => {
 
         // Registers a handler for when the specific hub method is invoked
         connection.on('ReciveMessage', reciveMessage);
+        
+        // Cleanup event listeners on unmount or re-render
+        return () => {
+            connection.off('ReciveMessage', reciveMessage);
+        }
     }, []);
 
     // Retrieving all chats between 2 users

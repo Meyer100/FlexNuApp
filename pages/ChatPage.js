@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { useEffect } from "react"
-import { connectToHub } from '../services/WebSocketService';
+import { connection, connectToHub } from '../services/WebSocketService';
 import UserSelect from '../components/chatpage/UserSelect';
 import { GetAllUsersChat } from '../services/ApiService';
 
@@ -15,6 +15,9 @@ const ChatPage = ({user}) => {
   useEffect(()=>{
     initializeChat();
 
+    return () => {
+      connection.stop();
+    }
   }, []);
 
 
